@@ -64,5 +64,13 @@ class HomepageController extends AbstractController
         ]);
     }
 
+    #[Route('/coursf', name: 'app_cours')]
+    public function coursformateur(): Response
+    {
+        return $this->render('dashboards/CoursFormateur.html.twig', [
+            'controller_cours' => 'CoursController',
+        ]);
+    }
+
     
 }
