@@ -24,11 +24,6 @@ class Organisme
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
-    public function __construct()
-    {
-        $this->id_formateur = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;

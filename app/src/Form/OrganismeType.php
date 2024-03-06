@@ -17,11 +17,7 @@ class OrganismeType extends AbstractType
             ->add('nom')
             ->add('adresse')
             ->add('ville')
-            ->add('id_formateur', EntityType::class, [
-                'class' => Formateur::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            
         ;
     }
 

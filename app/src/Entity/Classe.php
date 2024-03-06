@@ -26,12 +26,12 @@ class Classe
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisme $id_organisme = null;
 
-    #[ORM\ManyToMany(targetEntity: Cours::class)]
-    private Collection $id_cours;
+    #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'id_cours')]
+    private Collection $id_classe;
 
     public function __construct()
     {
-        $this->id_cours = new ArrayCollection();
+        $this->id_classe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +95,33 @@ class Classe
     public function removeIdCour(Cours $idCour): static
     {
         $this->id_cours->removeElement($idCour);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cours>
+     */
+    public function getIdClasse(): Collection
+    {
+        return $this->id_classe;
+    }
+
+    public function addIdClasse(Cours $idClasse): static
+    {
+        if (!$this->id_classe->contains($idClasse)) {
+            $this->id_classe->add($idClasse);
+            $idClasse->addIdCour($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdClasse(Cours $idClasse): static
+    {
+        if ($this->id_classe->removeElement($idClasse)) {
+            $idClasse->removeIdCour($this);
+        }
 
         return $this;
     }
