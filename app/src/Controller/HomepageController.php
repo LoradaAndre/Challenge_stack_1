@@ -33,10 +33,36 @@ class HomepageController extends AbstractController
     }
 
     #[Route('/organismes', name: 'app_organismes')]
-    public function organisations(): Response
+    public function organismes(): Response
     {
         return $this->render('dashboards/OrganismesFormateur.html.twig', [
             'controller_name' => 'OrganismesController',
         ]);
     }
+
+    #[Route('/classes', name: 'app_classes')]
+    public function classes(): Response
+    {
+        return $this->render('dashboards/ClassesFormateur.html.twig', [
+            'controller_name' => 'ClassesController',
+        ]);
+    }
+
+    #[Route('/eleves', name: 'app_eleves')]
+    public function eleves(): Response
+    {
+        return $this->render('dashboards/ElevesFormateur.html.twig', [
+            'controller_eleves' => 'ElevesController',
+        ]);
+    }
+
+    #[Route('/addEleves', name: 'app_addEleves')]
+    public function addeleves(): Response
+    {
+        return $this->render('dashboards/AddElevesFormateur.html.twig', [
+            'controller_addeleves' => 'AddElevesController',
+        ]);
+    }
+
+    
 }
