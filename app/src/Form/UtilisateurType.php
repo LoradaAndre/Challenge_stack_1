@@ -18,6 +18,7 @@ class UtilisateurType extends AbstractType
             ->add('photo_profil')
             ->add('admin')
             ->add('statut')
+            ->add('mot_de_passe')
         ;
     }
 
