@@ -24,11 +24,19 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboardE', name: 'app_dashboard-F')]
+    #[Route('/dashboardE', name: 'app_dashboard-E')]
     public function dashboardE(): Response
     {
         return $this->render('dashboards/EtudientDashboard.html.twig', [
             'controller_name' => 'EtudientDashboardController',
+        ]);
+    }
+
+    #[Route('/organismes', name: 'app_organismes')]
+    public function organisations(): Response
+    {
+        return $this->render('dashboards/OrganismesFormateur.html.twig', [
+            'controller_name' => 'OrganismesController',
         ]);
     }
 }
