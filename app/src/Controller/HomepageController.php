@@ -39,4 +39,20 @@ class HomepageController extends AbstractController
             'controller_name' => 'OrganismesController',
         ]);
     }
+
+    #[Route('/AddOrganismes', name: 'app_Add-Organismes')]
+    public function AddOrganismes(): Response
+    {
+        return $this->render('dashboards/AddOrganismes.html.twig', [
+            'controller_name' => 'HomepageController',
+        ]);
+    }
+
+    #[Route('/AddEtudiant', name: 'app_AddEtudiant')]
+    public function AddEtudiant(): Response
+    {
+        return $this->render('dashboards/AddEtudiant.html.twig', [
+            'controller_name' => 'HomepageController',
+        ]);
+    }
 }
