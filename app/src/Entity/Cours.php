@@ -34,9 +34,6 @@ class Cours
     #[ORM\Column(length: 255)]
     private ?string $categorie = null;
 
-    #[ORM\ManyToMany(targetEntity: Classe::class)]
-    private Collection $id_classe;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Formateur $id_formateur = null;
@@ -44,10 +41,13 @@ class Cours
     #[ORM\OneToMany(targetEntity: Examen::class, mappedBy: 'id_cours')]
     private Collection $examens;
 
+    #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'id_cours')]
+    private Collection $id_cours;
+
     public function __construct()
     {
-        $this->id_classe = new ArrayCollection();
         $this->examens = new ArrayCollection();
+        $this->id_cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +127,37 @@ class Cours
         return $this;
     }
 
+    
+    /**
+     * @return Collection<int, Examen>
+     */
+    public function getExamens(): Collection
+    {
+        return $this->examens;
+    }
+
+    public function addExamen(Examen $examen): static
+    {
+        if (!$this->examens->contains($examen)) {
+            $this->examens->add($examen);
+            $examen->setIdCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExamen(Examen $examen): static
+    {
+        if ($this->examens->removeElement($examen)) {
+            // set the owning side to null (unless already changed)
+            if ($examen->getIdCours() === $this) {
+                $examen->setIdCours(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Classe>
      */
@@ -163,32 +194,27 @@ class Cours
         return $this;
     }
 
+
     /**
-     * @return Collection<int, Examen>
+     * @return Collection<int, Classe>
      */
-    public function getExamens(): Collection
+    public function getIdCours(): Collection
     {
-        return $this->examens;
+        return $this->id_cours;
     }
 
-    public function addExamen(Examen $examen): static
+    public function addIdCour(Classe $idCour): static
     {
-        if (!$this->examens->contains($examen)) {
-            $this->examens->add($examen);
-            $examen->setIdCours($this);
+        if (!$this->id_cours->contains($idCour)) {
+            $this->id_cours->add($idCour);
         }
 
         return $this;
     }
 
-    public function removeExamen(Examen $examen): static
+    public function removeIdCour(Classe $idCour): static
     {
-        if ($this->examens->removeElement($examen)) {
-            // set the owning side to null (unless already changed)
-            if ($examen->getIdCours() === $this) {
-                $examen->setIdCours(null);
-            }
-        }
+        $this->id_cours->removeElement($idCour);
 
         return $this;
     }
