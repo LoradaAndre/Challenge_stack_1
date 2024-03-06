@@ -66,6 +66,10 @@ final class Version20240305131339 extends AbstractMigration
         $this->addSql('ALTER TABLE ressource ADD CONSTRAINT FK_939F45442E149425 FOREIGN KEY (id_cours_id) REFERENCES cours (id)');
         $this->addSql('ALTER TABLE suivi ADD CONSTRAINT FK_2EBCCA8F2E149425 FOREIGN KEY (id_cours_id) REFERENCES cours (id)');
         $this->addSql('ALTER TABLE suivi ADD CONSTRAINT FK_2EBCCA8FC5F87C54 FOREIGN KEY (id_etudiant_id) REFERENCES etudiant (id)');
+        $this->addSql('ALTER TABLE organisme_formateur DROP FOREIGN KEY FK_A41FD0085DDD38F5');
+        $this->addSql('ALTER TABLE organisme_formateur DROP FOREIGN KEY FK_A41FD008155D8F51');
+        $this->addSql('DROP TABLE organisme_formateur');
+        $this->addSql('ALTER TABLE utilisateur ADD mot_de_passe VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -117,5 +121,9 @@ final class Version20240305131339 extends AbstractMigration
         $this->addSql('DROP TABLE suivi');
         $this->addSql('DROP TABLE utilisateur');
         $this->addSql('DROP TABLE messenger_messages');
+        $this->addSql('CREATE TABLE organisme_formateur (organisme_id INT NOT NULL, formateur_id INT NOT NULL, INDEX IDX_A41FD008155D8F51 (formateur_id), INDEX IDX_A41FD0085DDD38F5 (organisme_id), PRIMARY KEY(organisme_id, formateur_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('ALTER TABLE organisme_formateur ADD CONSTRAINT FK_A41FD0085DDD38F5 FOREIGN KEY (organisme_id) REFERENCES organisme (id) ON UPDATE NO ACTION ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE organisme_formateur ADD CONSTRAINT FK_A41FD008155D8F51 FOREIGN KEY (formateur_id) REFERENCES formateur (id) ON UPDATE NO ACTION ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE utilisateur DROP mot_de_passe');
     }
 }
