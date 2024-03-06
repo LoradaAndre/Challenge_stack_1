@@ -31,12 +31,6 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Etudiant $id_etudiant = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Formateur $id_formateur = null;
-
     #[ORM\Column(length: 255)]
     private ?string $mot_de_passe = null;
 
@@ -113,30 +107,6 @@ class Utilisateur
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
-
-        return $this;
-    }
-
-    public function getIdEtudiant(): ?Etudiant
-    {
-        return $this->id_etudiant;
-    }
-
-    public function setIdEtudiant(?Etudiant $id_etudiant): static
-    {
-        $this->id_etudiant = $id_etudiant;
-
-        return $this;
-    }
-
-    public function getIdFormateur(): ?Formateur
-    {
-        return $this->id_formateur;
-    }
-
-    public function setIdFormateur(?Formateur $id_formateur): static
-    {
-        $this->id_formateur = $id_formateur;
 
         return $this;
     }

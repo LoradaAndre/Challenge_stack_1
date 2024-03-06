@@ -24,26 +24,6 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    /* #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $utilisateur = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($utilisateur);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('utilisateur/new.html.twig', [
-            'utilisateur' => $utilisateur,
-            'form' => $form,
-        ]);
-    } */
-
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
