@@ -34,9 +34,6 @@ class Cours
     #[ORM\Column(length: 255)]
     private ?string $categorie = null;
 
-    #[ORM\ManyToMany(targetEntity: Classe::class)]
-    private Collection $id_classe;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Formateur $id_formateur = null;
@@ -44,10 +41,13 @@ class Cours
     #[ORM\OneToMany(targetEntity: Examen::class, mappedBy: 'id_cours')]
     private Collection $examens;
 
+    #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'id_classe')]
+    private Collection $id_cours;
+
     public function __construct()
     {
-        $this->id_classe = new ArrayCollection();
         $this->examens = new ArrayCollection();
+        $this->id_cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,6 +189,30 @@ class Cours
                 $examen->setIdCours(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Classe>
+     */
+    public function getIdCours(): Collection
+    {
+        return $this->id_cours;
+    }
+
+    public function addIdCour(Classe $idCour): static
+    {
+        if (!$this->id_cours->contains($idCour)) {
+            $this->id_cours->add($idCour);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCour(Classe $idCour): static
+    {
+        $this->id_cours->removeElement($idCour);
 
         return $this;
     }
