@@ -41,7 +41,7 @@ class Cours
     #[ORM\OneToMany(targetEntity: Examen::class, mappedBy: 'id_cours')]
     private Collection $examens;
 
-    #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'id_classe')]
+    #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'id_cours')]
     private Collection $id_cours;
 
     public function __construct()
@@ -127,6 +127,37 @@ class Cours
         return $this;
     }
 
+    
+    /**
+     * @return Collection<int, Examen>
+     */
+    public function getExamens(): Collection
+    {
+        return $this->examens;
+    }
+
+    public function addExamen(Examen $examen): static
+    {
+        if (!$this->examens->contains($examen)) {
+            $this->examens->add($examen);
+            $examen->setIdCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExamen(Examen $examen): static
+    {
+        if ($this->examens->removeElement($examen)) {
+            // set the owning side to null (unless already changed)
+            if ($examen->getIdCours() === $this) {
+                $examen->setIdCours(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Classe>
      */
@@ -163,35 +194,6 @@ class Cours
         return $this;
     }
 
-    /**
-     * @return Collection<int, Examen>
-     */
-    public function getExamens(): Collection
-    {
-        return $this->examens;
-    }
-
-    public function addExamen(Examen $examen): static
-    {
-        if (!$this->examens->contains($examen)) {
-            $this->examens->add($examen);
-            $examen->setIdCours($this);
-        }
-
-        return $this;
-    }
-
-    public function removeExamen(Examen $examen): static
-    {
-        if ($this->examens->removeElement($examen)) {
-            // set the owning side to null (unless already changed)
-            if ($examen->getIdCours() === $this) {
-                $examen->setIdCours(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Classe>
