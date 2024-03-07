@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cours;
+use App\Entity\Formateur;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,31 @@ class CoursController extends AbstractController
             ->getResult();
 
             return $this->render('cours/index.html.twig', ['cours' => $results]);
+
+    }
+
+    
+    #[Route('/liste', name: 'app_cours')]
+    public function coursFormateur(CoursRepository $coursRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        $userId = $user->getID();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $results = $queryBuilder
+            ->select('c')
+            ->from('App\Entity\Cours', 'c')
+            ->join('c.id_formateur', 'f')
+            ->join('f.id_utilisateur', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+
+            return $this->render('dashboards/CoursFormateur.html.twig', [
+                'cours' => $results,
+            ]);
 
     }
 

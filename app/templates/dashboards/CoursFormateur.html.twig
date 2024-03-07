@@ -45,6 +45,9 @@
 
                     <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <!-- debut ligne classes -->
+                    
+                    {% for obj in cours %}
+
                     <div class="bg-white rounded-lg shadow p-4 h-80">
                             <div class="flex-col items-center space-x-3 h-full">
                                 <div class="inline-flex flex-shrink-0 h-60 w-full">
@@ -54,15 +57,16 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-medium text-gray-900">
-                                        Titre de la carte
+                                        {{ obj.titre }}
                                     </p>
                                     <p class="text-sm text-gray-500">
-                                        Texte secondaire
+                                       {{ obj.description }}
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        
+                            
+                    {% endfor %}
                     <!-- fin ligne classes -->
                     </div>
                 </div>
