@@ -17,6 +17,10 @@ class Etudiant
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $id_utilisateur = null;
 
+    #[ORM\ManyToOne(inversedBy: 'id_etudiant')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Classe $id_classe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +34,18 @@ class Etudiant
     public function setIdUtilisateur(?Utilisateur $id_utilisateur): static
     {
         $this->id_utilisateur = $id_utilisateur;
+
+        return $this;
+    }
+
+    public function getIdClasse(): ?Classe
+    {
+        return $this->id_classe;
+    }
+
+    public function setIdClasse(?Classe $id_classe): static
+    {
+        $this->id_classe = $id_classe;
 
         return $this;
     }

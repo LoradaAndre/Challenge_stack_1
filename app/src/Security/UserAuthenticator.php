@@ -56,7 +56,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             if($user->getStatut() == 'formateur'){
                 $redirectUrl = $this->urlGenerator->generate('app_dashboard-F');
             }else{
-                $redirectUrl = $this->urlGenerator->generate('app_dashboard-E');
+                $redirectUrl = $this->urlGenerator->generate('app_dashboard-F');
             }
             return new RedirectResponse($redirectUrl);
         }

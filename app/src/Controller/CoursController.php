@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
+use Symfony\Component\Security\Core\Security;
+use App\Entity\Formateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +17,20 @@ use Symfony\Component\Routing\Attribute\Route;
 class CoursController extends AbstractController
 {
     #[Route('/', name: 'app_cours_index', methods: ['GET'])]
-    public function index(CoursRepository $coursRepository): Response
-    {
-        return $this->render('cours/index.html.twig', [
-            'cours' => $coursRepository->findAll(),
-        ]);
-    }
+    public function index(CoursRepository $coursRepository, EntityManagerInterface $entityManager, Security $security): Response
+{
+    $user = $security->getUser();
+    $idFormateur = $user->getId();
+
+    
+    $formateur = $entityManager->getRepository(Formateur::class)->findOneBy(['id_utilisateur' => $idFormateur]);
+   
+    $cours = $coursRepository->findByFormateurId($idFormateur);
+    
+    return $this->render('cours/index.html.twig', [
+        'cours' => $cours
+    ]);
+}
 
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
