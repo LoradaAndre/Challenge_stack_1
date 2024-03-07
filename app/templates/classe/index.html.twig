@@ -92,8 +92,9 @@
     </div>
     <div class="flex flex-1 flex-row-reverse">
         <div class="flex items-center h-5">
-            <a href="{{ item.classe.id }}/edit">modifier  </a>
-            <a>supprimer</a>
+            <a href="{{ item.classe.id }}/edit">modifier</a>
+        {{ include('classe/_delete_form.html.twig') }}
+            
         </div>
     </div>
 </div>
