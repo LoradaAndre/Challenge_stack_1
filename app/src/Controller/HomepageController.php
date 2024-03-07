@@ -1,27 +1,48 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Cours;
+use App\Entity\Formateur;
+use App\Repository\CoursRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class HomepageController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function index(): Response
+    public function index(Security $security): Response
     {
-        return $this->redirectToRoute('app_login');
-        // return $this->render('homepage/index.html.twig', [
-        //     'controller_name' => 'HomepageController',
-        // ]);
+        $user = $security->getUser();
+        if($user){
+            return $this->redirectToRoute('app_dashboard');
+        }
+        else{
+            return $this->redirectToRoute('app_login');
+        }
+        
+        
     }
 
-     #[Route('/dashboardF', name: 'app_dashboard-F')]
-    public function dashboardF(): Response
+     #[Route('/dashboardF', name: 'app_dashboard')]
+    public function dashboardF(Security $security, CoursRepository $coursRepository, EntityManagerInterface $entityManager ): Response
     {
+        $user = $security->getUser();
+        $idFormateur = $user->getId();
+
+        $cours = $coursRepository->findByFormateurId($idFormateur);
+        
+        $formateur = $entityManager->getRepository(Formateur::class)->findOneBy(['id_utilisateur' => $idFormateur]);
+
+        $countCoursWithFormateur = $coursRepository->countByFormateur($idFormateur);
+
         return $this->render('dashboards/formateurDashboard.html.twig', [
             'controller_name' => 'FormateurDashboarController',
+            'cours_count' => $countCoursWithFormateur,
+            'cours' => $cours, //
         ]);
     }
 

@@ -41,7 +41,7 @@
                     <!-- debut ligne classes -->
                     
                     {% for obj in cours %}
-
+                    <a href="/cours/{{ obj.id }}">
                     <div class="bg-white rounded-lg shadow p-4 h-80">
                             <div class="flex-col items-center space-x-3 h-full">
                                 <div class="inline-flex flex-shrink-0 h-60 w-full">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                            
+                       </a>     
                     {% endfor %}
                     <!-- fin ligne classes -->
                     </div>

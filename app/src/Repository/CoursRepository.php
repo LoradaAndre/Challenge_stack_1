@@ -29,6 +29,18 @@ class CoursRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // src/Repository/CoursRepository.php
+
+    public function countByFormateur($idFormateur): int
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->where('c.id_formateur = :idFormateur') // Remove the semicolon here
+            ->setParameter('idFormateur', $idFormateur); // This now correctly continues the method chain
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+
     //    /**
     //     * @return Cours[] Returns an array of Cours objects
     //     */

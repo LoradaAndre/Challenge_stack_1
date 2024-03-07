@@ -22,31 +22,8 @@ class CoursController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-    #[Route('/', name: 'app_cours_index', methods: ['GET'])]
+    #[Route('/', name: 'app_cours', methods: ['GET'])]
     public function index(CoursRepository $coursRepository, Security $security): Response
-    {
-        $user = $security->getUser();
-
-        $userId = $user->getID();
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-
-        $results = $queryBuilder
-            ->select('c')
-            ->from('App\Entity\Cours', 'c')
-            ->join('c.id_formateur', 'f')
-            ->join('f.id_utilisateur', 'u')
-            ->where('u.id = :userId')
-            ->setParameter('userId', $userId)
-            ->getQuery()
-            ->getResult();
-
-            return $this->render('cours/index.html.twig', ['cours' => $results]);
-
-    }
-
-    
-    #[Route('/liste', name: 'app_cours')]
-    public function coursFormateur(CoursRepository $coursRepository, Security $security): Response
     {
         $user = $security->getUser();
 
@@ -66,8 +43,10 @@ class CoursController extends AbstractController
             return $this->render('dashboards/CoursFormateur.html.twig', [
                 'cours' => $results,
             ]);
-
     }
+
+    
+  
 
     #[Route('/add', name: 'app_cours_add')]
     public function AddCours(Request $request, EntityManagerInterface $entityManager, Security $security): Response
@@ -160,6 +139,6 @@ class CoursController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cours', [], Response::HTTP_SEE_OTHER);
     }
 }
