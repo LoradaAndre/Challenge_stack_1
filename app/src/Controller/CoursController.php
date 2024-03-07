@@ -15,12 +15,30 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/cours')]
 class CoursController extends AbstractController
 {
-    #[Route('/', name: 'app_cours_index', methods: ['GET'])]
-    public function index(CoursRepository $coursRepository): Response
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        return $this->render('cours/index.html.twig', [
-            'cours' => $coursRepository->findAll(),
-        ]);
+        $this->entityManager = $entityManager;
+    }
+    #[Route('/', name: 'app_cours_index', methods: ['GET'])]
+    public function index(CoursRepository $coursRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        $userId = $user->getID();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $results = $queryBuilder
+            ->select('c')
+            ->from('App\Entity\Cours', 'c')
+            ->join('c.id_formateur', 'f')
+            ->join('f.id_utilisateur', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+
+            return $this->render('cours/index.html.twig', ['cours' => $results]);
+
     }
 
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
