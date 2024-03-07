@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Cours;
-use App\Entity\Formateur;
+
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
-use Symfony\Component\Security\Core\Security;
+
 use App\Entity\Formateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
