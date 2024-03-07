@@ -54,13 +54,13 @@
                             </div>
                         </div>
                             <div class="mb-6">
-                                <label for="id_classe" class="block text-sm font-medium text-gray-700">Classe(s) liée(s) CHOIX MULTIPLE !</label>
-                                <select id="id_classe" name="id_classe[]" class="block w-full mt-1 border-2 border-gray-300 shadow-sm rounded-md" multiple>
+                                {# <label for="id_classe" class="block text-sm font-medium text-gray-700">Classe(s) associé(s) au cour</label>
+                               <select id="id_classe" name="id_classe[]" class="block w-full mt-1 border-2 border-gray-300 shadow-sm rounded-md" multiple>
                                     <option value=""></option>
-                                    {% for organisme in organismes %}
-                                        <option value="{{ organisme.id }}">{{ organisme.nom }}</option>
+                                    {% for classe in classes %}
+                                        <option value="{{ classe.id }}">{{ classe.titre }}</option>
                                     {% endfor %}
-                                </select>
+                                </select> #}
                             </div>
                         
                         
