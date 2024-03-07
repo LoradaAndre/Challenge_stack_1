@@ -7,6 +7,7 @@ use App\Entity\Cours;
 use App\Entity\Formation;
 use App\Entity\Organisme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,11 +26,8 @@ class ClasseType extends AbstractType
                 'class' => Organisme::class,
                 'choice_label' => 'id',
             ])
-            ->add('id_cours', EntityType::class, [
-                'class' => Cours::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            ->add('Ajouter', SubmitType::class)
+            
         ;
     }
 
