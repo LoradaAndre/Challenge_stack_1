@@ -55,4 +55,13 @@ class HomepageController extends AbstractController
             'controller_name' => 'HomepageController',
         ]);
     }
+
+    #[Route('/AddCours', name: 'app_AddCours')]
+    public function AddCours(): Response
+    {
+        return $this->render('dashboards/AddCours.html.twig', [
+            'controller_name' => 'HomepageController',
+        ]);
+    }
+
 }
