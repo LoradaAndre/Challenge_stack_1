@@ -9,26 +9,32 @@
                 </div>
             </div>
             
-             {% if app.user.getStatut == "formateur" %}
-            <div class="flex-1 flex flex-col space-x-4 justify-evenly">
-            <p><a href="/organisme/">Organismes</a></p>
-            <p classe="m-0"><a>Classe</a></p>
-            <p><a>Eleves</a></p>
-            <p><a>Cours</a></p>
-             </div>
-            <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
-                <p><a>Modifier les informations du profil</a></p>
-            </div>
+            {% if app.user.getStatut == "formateur" %}
+                <div class="flex-1 flex flex-col space-x-4 justify-evenly">
+                    <p><a href="/organisme/">Organismes</a></p>
+                    <p classe="m-0"><a>Classe</a></p>
+                    <p><a>Eleves</a></p>
+                    <p><a href="{{ path('app_cours') }}">Cours</a></p>
+                </div>
+                <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+                    <p><a>Modifier les informations du profil</a></p>
+                </div>
             {% else %}
-            <div class="flex-1 flex flex-col space-x-4 justify-evenly">
-            <p ><a>Cours</a></p>
-            <p ><a>Notes</a></p>
-            <p ><a>Convocations</a></p>
-             </div>
-            <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
-                <p><a >Modifier les informations du profil</a></p>
-            </div>
+                <div class="flex-1 flex flex-col space-x-4 justify-evenly">
+                    <p><a>Cours</a></p>
+                    <p><a>Notes</a></p>
+                    <p><a>Convocations</a></p>
+                </div>
+                <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+                    <p><a href="">Modifier le profil</a></p>
+                </div>
             {% endif %}
 
             
 </nav>
+
+<style>
+    p {
+        margin:0;
+    }
+</style>

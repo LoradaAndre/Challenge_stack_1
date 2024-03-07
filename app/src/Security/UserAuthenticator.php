@@ -51,7 +51,6 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
 
         if ($user) {
-            
 
             if($user->getStatut() == 'formateur'){
                 $redirectUrl = $this->urlGenerator->generate('app_dashboard-F');

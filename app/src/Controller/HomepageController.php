@@ -11,9 +11,10 @@ class HomepageController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function index(): Response
     {
-        return $this->render('homepage/index.html.twig', [
-            'controller_name' => 'HomepageController',
-        ]);
+        return $this->redirectToRoute('app_login');
+        // return $this->render('homepage/index.html.twig', [
+        //     'controller_name' => 'HomepageController',
+        // ]);
     }
 
      #[Route('/dashboardF', name: 'app_dashboard-F')]
@@ -21,14 +22,6 @@ class HomepageController extends AbstractController
     {
         return $this->render('dashboards/formateurDashboard.html.twig', [
             'controller_name' => 'FormateurDashboarController',
-        ]);
-    }
-
-    #[Route('/dashboardE', name: 'app_dashboard-E')]
-    public function dashboardE(): Response
-    {
-        return $this->render('dashboards/EtudientDashboard.html.twig', [
-            'controller_name' => 'EtudientDashboardController',
         ]);
     }
 
@@ -64,13 +57,12 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    #[Route('/coursf', name: 'app_cours')]
-    public function coursformateur(): Response
+    #[Route('/AddExamen', name: 'app_AddExamen')]
+    public function AddExamen(): Response
     {
-        return $this->render('dashboards/CoursFormateur.html.twig', [
-            'controller_cours' => 'CoursController',
+        return $this->render('dashboards/AddExamen.html.twig', [
+            'controller_exam' => 'HomepageController',
         ]);
     }
-
     
 }
