@@ -42,12 +42,13 @@ class Cours
     private Collection $examens;
 
     #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'id_cours')]
-    private Collection $id_cours;
+    private Collection $id_classe;
+
 
     public function __construct()
     {
         $this->examens = new ArrayCollection();
-        $this->id_cours = new ArrayCollection();
+        $this->id_classe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,27 +196,4 @@ class Cours
     }
 
 
-    /**
-     * @return Collection<int, Classe>
-     */
-    public function getIdCours(): Collection
-    {
-        return $this->id_cours;
-    }
-
-    public function addIdCour(Classe $idCour): static
-    {
-        if (!$this->id_cours->contains($idCour)) {
-            $this->id_cours->add($idCour);
-        }
-
-        return $this;
-    }
-
-    public function removeIdCour(Classe $idCour): static
-    {
-        $this->id_cours->removeElement($idCour);
-
-        return $this;
-    }
 }

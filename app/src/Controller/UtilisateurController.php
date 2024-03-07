@@ -24,7 +24,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    /*#[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
     $utilisateur = new Utilisateur();
@@ -48,11 +48,55 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         $entityManager->flush();
 
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+    } 
+    
+
+    return $this->render('utilisateur/AddElevesFormateur.html.twig', [
+        'utilisateur' => $utilisateur,
+    ]);
+}*/
+
+#[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    
+    $utilisateur = new Utilisateur();
+
+    $form = $this->createForm(UtilisateurType::class);
+    $form->handleRequest($request);
+    // dd($form);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Récupérer les données du formulaire
+        $data = $form->getData();
+        // Enregistrer l'utilisateur
+        $motDePasse = password_hash($data['mot_de_passe'], PASSWORD_BCRYPT);
+
+        $utilisateur->setEmail($data['email']);
+        $utilisateur->setMotDePasse($motDePasse);
+        $utilisateur->setAdmin(0);
+        $utilisateur->setStatut('Etudiant');
+
+        $entityManager->persist($utilisateur);
+        $entityManager->flush();
+
+        // Vérifier le statut de l'Utilisateur et créer l'entité associée
+        $etudiant = new Etudiant();
+        // dd($etudiant);
+        $etudiant->setIdUtilisateur($utilisateur);
+        $entityManager->persist($etudiant);
+
+        
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->render('utilisateur/new.html.twig', [
+    // Rendre le formulaire dans le template Twig
+    return $this->render('utilisateur/AddElevesFormateur.html.twig', [
+        'form' => $form->createView(),
         'utilisateur' => $utilisateur,
-        'form' => $form,
     ]);
 }
 
