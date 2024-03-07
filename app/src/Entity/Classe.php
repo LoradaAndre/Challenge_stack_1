@@ -29,11 +29,15 @@ class Classe
     #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'id_classe')]
     private Collection $id_cours;
 
+    #[ORM\OneToMany(mappedBy: 'id_classe', targetEntity: Etudiant::class, fetch: 'EAGER')]
+    private Collection $id_etudiant;
+
 
 
     public function __construct()
     {
         $this->id_cours = new ArrayCollection();
+        $this->id_etudiant = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,6 +103,36 @@ class Classe
     {
         if ($this->id_cours->removeElement($idCour)) {
             $idCour->removeIdClasse($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etudiant>
+     */
+    public function getIdEtudiant(): Collection
+    {
+        return $this->id_etudiant;
+    }
+
+    public function addIdEtudiant(Etudiant $idEtudiant): static
+    {
+        if (!$this->id_etudiant->contains($idEtudiant)) {
+            $this->id_etudiant->add($idEtudiant);
+            $idEtudiant->setIdClasse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdEtudiant(Etudiant $idEtudiant): static
+    {
+        if ($this->id_etudiant->removeElement($idEtudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($idEtudiant->getIdClasse() === $this) {
+                $idEtudiant->setIdClasse(null);
+            }
         }
 
         return $this;

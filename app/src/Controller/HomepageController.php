@@ -32,14 +32,6 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    #[Route('/classes', name: 'app_classes')]
-    public function classes(): Response
-    {
-        return $this->render('dashboards/ClassesFormateur.html.twig', [
-            'controller_name' => 'ClassesController',
-        ]);
-    }
-
     #[Route('/eleves', name: 'app_eleves')]
     public function eleves(): Response
     {

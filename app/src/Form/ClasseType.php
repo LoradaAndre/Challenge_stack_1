@@ -24,7 +24,7 @@ class ClasseType extends AbstractType
             ])
             ->add('id_organisme', EntityType::class, [
                 'class' => Organisme::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('Ajouter', SubmitType::class)
             
