@@ -24,7 +24,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    /*#[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
     $utilisateur = new Utilisateur();
