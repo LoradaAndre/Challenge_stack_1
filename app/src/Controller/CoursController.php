@@ -67,6 +67,35 @@ class CoursController extends AbstractController
 
     }
 
+    #[Route('/add', name: 'app_cours_add')]
+    public function AddCours(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $cour = new Cours();
+        $form = $this->createForm(CoursType::class, $cour);
+        $form->handleRequest($request);
+     
+        if ($form->isSubmitted()) {
+
+            $user = $security->getUser();
+            $idFormateur = $user->getId();
+            
+            $formateur = $entityManager->getRepository(Formateur::class)->findOneBy(['id_utilisateur' => $idFormateur]);
+
+            $cour->setIdFormateur($formateur);
+     
+            $entityManager->persist($cour);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_cours', [], Response::HTTP_SEE_OTHER);
+        }
+
+        
+        return $this->render('dashboards/AddCours.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
+
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
