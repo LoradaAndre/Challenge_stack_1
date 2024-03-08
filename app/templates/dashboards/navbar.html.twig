@@ -4,7 +4,10 @@
                     <span class="h-20 w-20 mb-4 rounded-full overflow-hidden bg-gray-300">
                         <!-- User's avatar goes here -->
                     </span>
-                <span class="font-medium text-gray-700">{{ app.user.getEmail }}</span>
+                {% if  app.user.getNom %}
+                    <p class="font-bold">{{ app.user.getPrenom }} {{ app.user.getNom }}</p>
+                {% endif %}
+                <span class="text-gray-700">{{ app.user.getEmail }}</span>
                 <a class="text-red-500 mx-2" href="{{ path('app_logout') }}">Déconnexion <i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
     </div>
