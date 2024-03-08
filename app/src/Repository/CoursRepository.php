@@ -29,6 +29,16 @@ class CoursRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // Dans CoursRepository
+public function findByClasseId($classeId)
+{
+    return $this->createQueryBuilder('c')
+        ->join('c.id_classe', 'cl') // Assumant que 'classes' est le nom de la propriété dans Cours pour la relation
+        ->where('cl.id = :classeId')
+        ->setParameter('classeId', $classeId)
+        ->getQuery()
+        ->getResult();
+}
     // src/Repository/CoursRepository.php
 
     public function countByFormateur($idFormateur): int

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cours;
 use App\Entity\Formateur;
+use App\Entity\Etudiant;
 use App\Repository\CoursRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -27,24 +28,41 @@ class HomepageController extends AbstractController
         
     }
 
-     #[Route('/dashboardF', name: 'app_dashboard')]
-    public function dashboardF(Security $security, CoursRepository $coursRepository, EntityManagerInterface $entityManager ): Response
-    {
-        $user = $security->getUser();
-        $idFormateur = $user->getId();
+    #[Route('/dashboardF', name: 'app_dashboard')]
+public function dashboardF(Security $security, CoursRepository $coursRepository, EntityManagerInterface $entityManager): Response
+{
+    $user = $security->getUser();
+    $idUtilisateur = $user->getId();
+    $statut = $user->getStatut(); // Assure-toi que ton entité User a une méthode getStatut()
 
-        $cours = $coursRepository->findByFormateurId($idFormateur);
-        
-        $formateur = $entityManager->getRepository(Formateur::class)->findOneBy(['id_utilisateur' => $idFormateur]);
-
-        $countCoursWithFormateur = $coursRepository->countByFormateur($idFormateur);
-
-        return $this->render('dashboards/formateurDashboard.html.twig', [
-            'controller_name' => 'FormateurDashboarController',
-            'cours_count' => $countCoursWithFormateur,
-            'cours' => $cours, //
-        ]);
+    if ($statut == "formateur") {
+        $cours = $coursRepository->findByFormateurId($idUtilisateur);
+        $countCours = $coursRepository->countByFormateur($idUtilisateur);
+    } elseif ($statut == "etudiant") {
+        $etudiant = $entityManager->getRepository(Etudiant::class)->findOneBy(['id_utilisateur' => $idUtilisateur]);
+        if ($etudiant) {
+            // Supposons que tu as une méthode pour trouver les cours par l'ID de la classe de l'étudiant
+            // Cette méthode doit être implémentée dans le repository correspondant
+            $cours = $coursRepository->findByClasseId($etudiant->getIdClasse()->getId());
+            $countCours = count($cours); // Simplement compter le nombre de cours récupérés
+        } else {
+            // Gérer le cas où l'étudiant n'est pas trouvé
+            $cours = [];
+            $countCours = 0;
+        }
+    } else {
+        // Gérer les autres statuts ou l'absence de statut
+        $cours = [];
+        $countCours = 0;
     }
+
+    return $this->render('dashboards/formateurDashboard.html.twig', [
+        'controller_name' => 'FormateurDashboarController',
+        'cours_count' => $countCours,
+        'cours' => $cours,
+    ]);
+}
+
 
     #[Route('/organismes', name: 'app_organismes')]
     public function organismes(): Response

@@ -24,7 +24,7 @@
                 <div class="container mx-auto px-4 py-6">
                 <h1 class="text-2xl font-bold mb-6">Créer un cours</h1>
                 <div class="flex flex-col max-w-md  space-y-4">
-
+            {{ form_start(form) }}
                 <form method="post" action="" enctype="multipart/form-data">
                     <div class="mb-4">
                         <div class="flex items-center mb-4">
@@ -43,47 +43,15 @@
                             {{ form_row(form.titre, {'label': false, 'attr': {'class': 'mt-1 block w-full border-gray-300 shadow-sm rounded-md'}}) }}
                         </div>
                         
-                        <div class="mb-6">
-                            <label class="block text-sm font-medium text-gray-700">Image du cours</label>
-                            <div class="flex justify-start items-center">
-                                <div class="mr-2">
-                                    <input type="file" id="image_cours" name="image_cours" class="hidden">
-                                    <label for="image_cours" class="cursor-pointer bg-white rounded border border-gray-300 px-3 py-2 text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50">Uploader</label>
-                                </div>
-                                <img id="preview_image" src="#" alt="Aperçu de l'image du cours" class="h-12 w-auto" style="display: none;">
-                            </div>
-                        </div>
+                       
                             <div class="mb-6">
-                                <label for="id_classe" class="block text-sm font-medium text-gray-700">Classe(s) liée(s) CHOIX MULTIPLE !</label>
-                                <select id="id_classe" name="id_classe[]" class="block w-full mt-1 border-2 border-gray-300 shadow-sm rounded-md" multiple>
-                                    <option value=""></option>
-                                    {% for organisme in organismes %}
-                                        <option value="{{ organisme.id }}">{{ organisme.nom }}</option>
-                                    {% endfor %}
-                                </select>
+                            
+                                
                             </div>
                         
                         
                             <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700">Associer des élèves manuellement</label>
-                                {% if students is defined and students|length > 0 %}
-                                    <select name="students[]" id="students" class="block w-full mt-1 border-2 border-gray-300 shadow-sm rounded-md" multiple>
-                                        {% for student in students %}
-                                            <option value="{{ student.id }}">{{ student.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                {% else %}
-                                    <select name="students[]" id="students" class="block w-full mt-1 border-2 border-gray-300 shadow-sm rounded-md" multiple>
-                                        {% set defaultStudents = [
-                                            {'id': 1, 'name': 'Étudiant A'},
-                                            {'id': 2, 'name': 'Étudiant B'},
-                                            {'id': 3, 'name': 'Étudiant C'}
-                                        ] %}
-                                        {% for student in defaultStudents %}
-                                            <option value="{{ student.id }}">{{ student.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                {% endif %}
+                                
 
 
                             </div>
@@ -130,6 +98,7 @@
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white font-bold rounded-md">Enregistrer</button>
                     </div>
                 </form>
+                {{ form_end(form) }}
                 </div>
             </div>
             </div>

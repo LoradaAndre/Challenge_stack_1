@@ -32,18 +32,24 @@ class CoursType extends AbstractType
             ->add('objectif')
             ->add('categorie', ChoiceType::class, [
                 'choices' => [
-                    'Catégorie 1' => 'categorie1',
-                    'Catégorie 2' => 'categorie2',
-                    'Catégorie 3' => 'categorie3',
+                    'Traveaux pratique' => 'TP',
+                    'Cours' => 'cours',
+                    'Travaux de groupe' => 'TP_groupe',
                 ],
                 'placeholder' => '--Sélectionnez une catégorie--',
                 'attr' => ['class' => 'block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline'],
             ])
-            ->add('id_formateur', EntityType::class, [
-                'class' => Formateur::class,
-                'choice_label' => 'id',
+            ->add('id_classe', EntityType::class, [
+                'class' => Classe::class,
+                'choice_label' => 'titre',
+                'multiple' => true, // Permet de sélectionner plusieurs classes
+                'expanded' => false, // Utilise un <select> plutôt que des checkboxes
+                'mapped' => false, // Ajoute ceci si 'id_classe' n'est pas une propriété directe de l'entité Cours
+                'label' => 'Classes',
+                'attr' => ['class' => 'block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline'],
             ])
-            ->add('Ajouter', SubmitType::class)
+            
+            // ->add('Ajouter', SubmitType::class)
 
 
         

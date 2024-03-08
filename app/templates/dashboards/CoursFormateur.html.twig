@@ -30,9 +30,12 @@
                             </select>
                         </div>
                         </div>
+                         {% if app.user.getStatut == "formateur" %}
                         <div class="flex flex-1 flex-row-reverse">
                             <a href="{{ path('app_cours_add') }}" class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white font-bold rounded-md">Ajouter</a>
                         </div>
+                         {% endif %}
+
                     </div>
                     
 
