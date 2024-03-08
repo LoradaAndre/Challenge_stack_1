@@ -3,116 +3,76 @@
 {% block title %}formateur dashboard{% endblock %}
 
 {% block body %}
+    <div class="min-h-screen flex flex-col">
+        <div class="flex-1 flex flex-row ">
+            {% include 'dashboards/navbar.html.twig' %}
 
-
-
-  <div class="min-h-screen flex flex-col">
-    <div class="flex-1 flex flex-row ">
-        
-        {% include 'dashboards/navbar.html.twig' %} 
-
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-            <div class="container mx-auto  h-full">
-                
-                <div class="bg-white shadow  h-full p-4 sm:p-6 xl:p-8 ">
-                <div class="font-bold text-black tracking-wide text-xl mb-16">Classes</div>
-                    <div class="flex mb-8">
-                        <div class="flex flex-1">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500 ">Tout selectionner</label>
-                            </div>
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                <div class="container mx-auto h-full">
+                    <div class="bg-white shadow h-full p-4 sm:p-6 xl:p-8 ">
+                        <div class="flex justify-between mb-12">
+                            <div class="font-bold text-black tracking-wide text-xl">Liste des classes</div>
+                            <a href="new" class="mr-4 p-2 px-4 bg-orange-500 rounded-md text-white">Ajouter une nouvelle classe</a>
                         </div>
-                        </div>
-                        <div class="flex flex-1 flex-row-reverse">
-                        
-                        <input type="text" name="recherche" id="recherche" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 " placeholer="search" required="">
 
-                        <a href="new" class="mr-4 p-2 border border-black border-2">Ajouter</a>
-                        </div>
-                    </div>
-                    
-
-
-                    <div class="flex p-4 m-4">
-                        <div class="flex mr-4">
-                            
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
+                        <div class="flex p-4 m-4">
+                            <div class="flex mr-4"></div>
+                            <div class="flex flex-1">
+                                <div class="flex items-center h-5">
                                     <p>Classe</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
+                            <div class="flex flex-1">
+                                <div class="flex items-center h-5">
                                     <p>Organisme</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-1">
+                                <div class="flex items-center h-5">
+                                    <p>Nombre d'élèves</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-row-reverse">
+                                <div class="flex items-center h-5"></div>
                             </div>
                         </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>Nb/éléves</p>
+                        <hr>
+
+                        {% for item in classesWithStudentsCount %}
+                            <!-- debut ligne classes -->
+                            <div class="flex p-4">
+                                <div class="flex flex-1">
+                                    <div class="flex items-center h-5">
+                                        <p>{{ item.classe.titre }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-1">
+                                    <div class="flex items-center h-5">
+                                        <p>{{ item.organisme }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-1">
+                                    <div class="flex items-center h-5">
+                                        <p>{{ item.studentsCount }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-1 flex-row-reverse">
+                                    <div class="flex items-center h-5 gap-4">
+                                        <a class="text-blue-500" href="#">Modifier</a>
+                                        <div class="text-red-500">
+                                            {{ include('classe/_delete_form.html.twig') }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-1 flex-row-reverse">
-                            <div class="flex items-center h-5">
-                                    
-                            </div>
-                        
-                        
-                        </div>
+                            <hr>
+                        {% else %}
+                            <p>Aucune Classe enregistrée</p>
+                        {% endfor %}
+                        <!-- fin ligne classes -->
                     </div>
-                    
-                    
-                   {% for item in classesWithStudentsCount %}
-
-<!-- debut ligne classes -->
-<div class="flex p-4  bg-gray-200">
-    <div class="flex mr-4">
-        <div class="flex items-center h-5">
-            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
-        </div>
-    </div>
-    <div class="flex flex-1">
-        <div class="flex items-center h-5">
-            <p>{{ item.classe.titre }}</p>
-        </div>
-    </div>
-    <div class="flex flex-1">
-        <div class="flex items-center h-5">
-            <p>{{item.organisme}}</p>
-        </div>
-    </div>
-    <div class="flex flex-1">
-        <div class="flex items-center h-5">
-            <p>{{ item.studentsCount }}</p>
-        </div>
-    </div>
-    <div class="flex flex-1 flex-row-reverse">
-        <div class="flex items-center h-5">
-            <a href="{{ item.classe.id }}/edit">modifier</a>
-        {{ include('classe/_delete_form.html.twig') }}
-            
-        </div>
-    </div>
-</div>
-
-{% else %}
-
-<p>Aucune Classe enregistrée</p>
-
-{% endfor %}
-
-                    <!-- fin ligne classes -->
                 </div>
-                </div>
-                
-            </div>
-        </main>
-        
+            </main>
+        </div>
     </div>
-</div>
-
 {% endblock %}

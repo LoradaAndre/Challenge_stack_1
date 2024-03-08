@@ -25,7 +25,6 @@ class ClasseController extends AbstractController
         
 
         $classes = $classeRepository->findAll();
-        //dd($classes);
         $classesWithStudentsCount = [];
     
         foreach ($classes as $classe) {
