@@ -12,8 +12,8 @@
             {% if app.user.getStatut == "formateur" %}
                 <div class="flex-1 flex flex-col space-x-4 justify-evenly">
                     <p><a href="/">Home</a></p>
-{#                    <p><a href="{{ path('app_organisme') }}">Organismes</a></p>#}
-{#                    <p><a href="{{ path('app_classe') }}">Classe</a></p>#}
+                    <p><a href="{{ path('app_organisme_index') }}">Organismes</a></p>
+                    <p><a href="{{ path('app_classe_index') }}">Classe</a></p>
                     <p><a>Eleves</a></p>
                     <p><a href="{{ path('app_cours') }}">Cours</a></p>
                 </div>
