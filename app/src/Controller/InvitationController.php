@@ -14,6 +14,7 @@ use App\Entity\Utilisateur;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 
@@ -44,42 +45,38 @@ class InvitationController extends AbstractController
             // Hasher le mot de passe aléatoire
             $hashedPassword = $passwordHasher->hashPassword($newUser, $randomPassword);
             $newUser->setMotDePasse($hashedPassword);
-            // Peut-être définir d'autres propriétés sur l'entité ici
-            // ...
 
             // Persister le nouvel utilisateur dans la base de données
             $entityManager->persist($newUser);
             $entityManager->flush();
+            
+            $email = (new TemplatedEmail())
+                ->from($EmailFormateur)
+                ->to($emailAddress)
+                ->subject('Invitation à rejoindre la classe')
+                ->html('<p>See Twig integration for better HTML integration!</p>')
+                ->htmlTemplate('emails/invitation.html.twig')
+                ->context([
+                    'password' => $randomPassword,
+                    'confirmation_url' => $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                ]);
+                // // $mailer->send($email);
 
-
-            
-            
-            
             // $email = (new Email())
-            //     ->from($EmailFormateur)
-            //     ->to($emailAddress)
-            //     ->subject('Invitation à rejoindre la classe')
-            //     ->html('emails/invitation.html.twig')
-            //     ->context([
-            //         'password' => $randomPassword,
-            //         'confirmation_url' => $this->generateUrl('app_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            //     ]);
-            //     $mailer->send($email);
-
-            $email = (new Email())
-            ->from('hello@example.com')
-            ->to('you@example.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            // ->from('hello@example.com')
+            // ->to('you@example.com')
+            // //->cc('cc@example.com')
+            // //->bcc('bcc@example.com')
+            // //->replyTo('fabien@example.com')
+            // //->priority(Email::PRIORITY_HIGH)
+            // ->subject('Time for Symfony Mailer!')
+            // ->text('Sending emails is fun again!')
+            // ->html('<p>See Twig integration for better HTML integration!</p>');
 
             // $mailer->send($email);
             try {
                 $mailer->send($email);
+                $this->addFlash('success', 'L\'invitation a été envoyée avec succès.');
             } catch (TransportExceptionInterface $e) {
                 // some error prevented the email sending; display an
                 // error message or try to resend the message
