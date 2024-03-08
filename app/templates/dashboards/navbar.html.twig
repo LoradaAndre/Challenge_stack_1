@@ -1,42 +1,75 @@
-<nav class="flex flex-col justify-between items-center p-6 bg-white shadow border">
-            <div class="flex-1  space-x-4">
-                <div class="flex flex-col items-center">
+<nav class="flex flex-col justify-between items-center p-12 bg-white shadow border">
+    <div class="flex-1  space-x-4">
+        <div class="flex flex-col items-center">
                     <span class="h-20 w-20 mb-4 rounded-full overflow-hidden bg-gray-300">
                         <!-- User's avatar goes here -->
                     </span>
-                    <span class="font-medium text-gray-700">{{ app.user.getEmail}}</span>
-                    <a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
-                </div>
-            </div>
-            
-            {% if app.user.getStatut == "formateur" %}
-                <div class="flex-1 flex flex-col justify-evenly">
-                    <p><a href="/">Home</a></p>
-                    <p><a href="{{ path('app_organisme') }}"">Organismes</a></p>
-                    <p><a href="{{ path('app_classe') }}">Classe</a></p>
-                    <p><a href="{{ path('app_eleves') }}">Eleves</a></p>
-                    <p><a href="{{ path('app_cours') }}">Cours</a></p>
-                </div>
-                <div class="flex-1 flex flex-col-reverse items-bottom mt-auto">
-                    <p><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier les informations du profil</a></p>
-                </div>
-            {% else %}
-                <div class="flex-1 flex flex-col justify-evenly">
-                    <p><a href="/">Home</a></p>
-                    <p><a href="{{ path('app_cours') }}">Cours</a></p>
-                    <p><a>Notes</a></p>
-                    <p><a>Convocations</a></p>
-                </div>
-                <div class="flex-1 flex flex-col-reverse items-bottom mt-auto">
-                    <p><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier le profil</a></p>
-                </div>
-            {% endif %}
+                {% if  app.user.getNom %}
+                    <p class="font-bold">{{ app.user.getPrenom }} {{ app.user.getNom }}</p>
+                {% endif %}
+                <span class="text-gray-700">{{ app.user.getEmail }}</span>
+                <a class="text-red-500 mx-2" href="{{ path('app_logout') }}">Déconnexion <i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+    </div>
+    {% if app.user.getStatut == "formateur" %}
+        <div class="flex-1 flex flex-col justify-evenly text-center">
+            <p class="hover:text-gray-500" id="accueil"><a href="/">Accueil</a></p>
+{#            {{ 'app_homepage' }}#}
+            <p class="hover:text-gray-500" id="organisme"><a href="{{ path('app_organisme_index') }}">Organismes</a></p>
+            <p class="hover:text-gray-500" id="classe"><a href="{{ path('app_classe_index') }}">Classe</a></p>
+            <p class="hover:text-gray-500" id="etudiant"><a>Etudiants</a></p>
+            <p class="hover:text-gray-500" id="cours"><a href="{{ path('app_cours') }}">Cours</a></p>
+        </div>
+        <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+            <p class="hover:text-gray-500"><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier mon profil</a>
+            </p>
+        </div>
+    {% else %}
+        <div class="flex-1 flex flex-col space-x-4 justify-evenly">
+            <p><a href="/dashboardF">Home</a></p>
+            <p><a href="{{ path('app_cours') }}">Cours</a></p>
+            <p><a>Notes</a></p>
+            <p><a>Convocations</a></p>
+        </div>
+        <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+            <p><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier le profil</a></p>
+        </div>
+    {% endif %}
 
-            
+    {% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtenez l'URL actuelle
+            var currentUrl = window.location.pathname;
+            var one = false;
+
+            // Obtenez tous les liens dans la barre de navigation
+            var navLinks = document.querySelectorAll('.flex-1 a');
+
+            // Parcourez les liens pour trouver celui correspondant à l'URL actuelle
+            navLinks.forEach(function (link) {
+                // Vérifiez si le lien a un attribut href avant de vérifier l'URL
+                if (link.hasAttribute('href') && link.getAttribute('href') === currentUrl) {
+                    // Appliquez une classe spéciale au parent du lien (le <p> dans votre cas)
+                    link.parentNode.classList.add('active-link');
+                    one = true;
+                }
+            });
+
+            if(!one){
+                navLinks[1].parentNode.classList.add('active-link');
+            }
+        });
+    </script>
+    {% endblock %}
 </nav>
 
 <style>
     p {
-        margin:0;
+        margin: 0;
+        width: 100%;
+    }
+    .active-link {
+        color: orange;
     }
 </style>

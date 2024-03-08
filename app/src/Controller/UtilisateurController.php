@@ -84,7 +84,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dashboard', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('utilisateur/edit.html.twig', [
