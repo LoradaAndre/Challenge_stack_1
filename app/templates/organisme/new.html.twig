@@ -31,23 +31,16 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <div class="container mx-auto  h-full">
-                
+
                 <div class="bg-white shadow  h-full p-4 sm:p-6 xl:p-8 ">
-                <div class="font-bold text-black tracking-wide text-xl mb-16">Ajouter un organisme de formation</div>
-                    {{form_start(form)}}
-                    {{form_widget(form)}}
+                    <div class="w-1/2 mx-auto">
+                        <div class="font-bold text-black tracking-wide text-xl mb-16 text-center">Ajouter un organisme de formation</div>
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
 
-                     
-                      
-                    
-                        
-                    
-
-                    {{form_end(form)}}
-
+                    </div>
                 </div>
-                </div>
-                
             </div>
         </main>
         
