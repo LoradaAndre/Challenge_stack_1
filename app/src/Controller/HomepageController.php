@@ -65,7 +65,7 @@ class HomepageController extends AbstractController
     #[Route('/addEleves', name: 'app_addEleves')]
     public function addeleves(): Response
     {
-        return $this->render('dashboards/AddElevesFormateur.html.twig', [
+        return $this->render('dashboards/AddEtudiant.html.twig', [
             'controller_addeleves' => 'AddElevesController',
         ]);
     }
