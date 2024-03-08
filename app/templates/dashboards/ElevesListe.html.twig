@@ -18,20 +18,13 @@
                 <div class="font-bold text-black tracking-wide text-xl mb-16">Elèves</div>
                     <div class="flex mb-8">
                         <div class="flex flex-1">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500 ">Tout selectionner</label>
-                            </div>
-                        </div>
+                        
                         </div>
                         <div class="flex flex-1 flex-row-reverse">
                         
                         <input type="text" name="recherche" id="recherche" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 " placeholer="search" required="">
 
-                        <button class="mr-4 p-2 border border-black border-2">Ajouter</button>
+                        <a href="/utilisateur/new" class="mr-4 p-2 border border-black border-2">Ajouter</a>
                         </div>
                     </div>
                     
@@ -44,11 +37,6 @@
                         <div class="flex flex-1">
                             <div class="flex items-center h-5">
                                     <p>Nom</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>Organisme</p>
                             </div>
                         </div>
                         <div class="flex flex-1">
@@ -69,43 +57,39 @@
                         
                         </div>
                     </div>
-                    <!-- debut ligne classes -->
-                    <div class="flex p-4  bg-gray-200">
-                        <div class="flex mr-4">
-                            <div class="flex items-center h-5">
-                                    <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
-                            </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>{{etudiant.nom}}</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>ESGI</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>{{etudiant.mail}}</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-1">
-                            <div class="flex items-center h-5">
-                                    <p>M1</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-1 flex-row-reverse">
-                            <div class="flex items-center h-5">
-                                    <a>modifier  </a>
-                                    <a>supprimer</a>
-                            </div>
-                        </div>
-                        
-                        </div>
-                    </div>
-                    <!-- fin ligne classes -->
+                    <!-- debut de etudiant -->
+   {% for etudiant in etudiants %}
+    <div class="flex p-4">
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idUtilisateur.nom }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idUtilisateur.email }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idClasse.titre }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1 flex-row-reverse">
+            <div class="flex items-center h-5 gap-4">
+                <a class="text-blue-500" href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier</a>
+                <div class="text-red-500">
+                    {{ include('utilisateur/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+{% else %}
+    <p>Aucun étudiant enregistré</p>
+{% endfor %}
+
+                    <!-- fin ligne étudiant -->
                 </div>
                 </div>
                 
