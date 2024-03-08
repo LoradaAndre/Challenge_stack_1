@@ -1,13 +1,11 @@
-<nav class="flex flex-col justify-between items-center p-6 bg-white shadow border">
+<nav class="flex flex-col justify-between items-center p-12 bg-white shadow border">
     <div class="flex-1  space-x-4">
         <div class="flex flex-col items-center">
                     <span class="h-20 w-20 mb-4 rounded-full overflow-hidden bg-gray-300">
                         <!-- User's avatar goes here -->
                     </span>
-            <div >
                 <span class="font-medium text-gray-700">{{ app.user.getEmail }}</span>
-                <a class="text-red-500 mx-2" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
-            </div>
+                <a class="text-red-500 mx-2" href="{{ path('app_logout') }}">Déconnexion <i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
     </div>
 
@@ -21,7 +19,7 @@
             <p class="hover:text-gray-500" id="cours"><a href="{{ path('app_cours') }}">Cours</a></p>
         </div>
         <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
-            <p class="hover:text-gray-500"><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier les informations du profil</a>
+            <p class="hover:text-gray-500"><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier mon profil</a>
             </p>
         </div>
     {% else %}
