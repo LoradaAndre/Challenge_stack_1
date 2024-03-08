@@ -1,39 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Organisme index{% endblock %}
+{% block title %}formateur dashboard{% endblock %}
 
 {% block body %}
-    <h1>Organisme index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for organisme in organismes %}
-            <tr>
-                <td>{{ organisme.id }}</td>
-                <td>{{ organisme.nom }}</td>
-                <td>{{ organisme.adresse }}</td>
-                <td>{{ organisme.ville }}</td>
-                <td>
-                    <a href="{{ path('app_organisme_show', {'id': organisme.id}) }}">show</a>
-                    <a href="{{ path('app_organisme_edit', {'id': organisme.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_organisme_new') }}">Create new</a>
+
+  <div class="min-h-screen flex flex-col">
+    <div class="flex-1 flex flex-row ">
+        
+        {% include 'dashboards/navbar.html.twig' %} 
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto  h-full">
+                
+                <div class="bg-white shadow  h-full p-4 sm:p-6 xl:p-8 ">
+                <div class="font-bold text-black tracking-wide text-xl mb-16">Organismes de formation</div>
+                    <div class="flex mb-8">
+                        <div class="flex flex-1">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="remember" class="text-gray-500 ">Tout selectionner</label>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="flex flex-1 flex-row-reverse">
+                        
+                        <input type="text" name="recherche" id="recherche" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 " placeholer="search" required="">
+
+                        <a href="/organisme/new" class="mr-4 p-2 border border-black border-2">Ajouter</a>
+                        </div>
+                    </div>
+            {% for organisme in organismes %}
+                    <!-- debut ligne organisme -->
+                    <div class="flex p-4  bg-gray-200">
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                    <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
+                            </div>
+                        </div>
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                <p>{{ organisme.nom }}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                <p>{{ organisme.ville }}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1 flex-row-reverse">
+                            <div class="flex items-center h-5">
+                                    <a href="/".{{ organisme.id }}."/edit">modifier  </a>
+                                    <form action="{{ path('app_organisme_delete', {'id': organisme.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet organisme ?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ organisme.id) }}">
+                                    <button type="submit">Supprimer</button>
+                                    </form>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                {% else %}
+                     <p>pas d'organismes enregistré</p>
+                {% endfor %}
+                    <!-- fin ligne organisme -->
+                </div>
+                </div>
+                
+            </div>
+        </main>
+        
+    </div>
+</div>
+
 {% endblock %}

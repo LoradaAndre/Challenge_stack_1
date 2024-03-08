@@ -17,6 +17,8 @@ class OrganismeController extends AbstractController
     #[Route('/', name: 'app_organisme_index', methods: ['GET'])]
     public function index(OrganismeRepository $organismeRepository): Response
     {
+       
+
         return $this->render('organisme/index.html.twig', [
             'organismes' => $organismeRepository->findAll(),
         ]);

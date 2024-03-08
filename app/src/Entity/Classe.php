@@ -38,6 +38,7 @@ class Classe
     {
         $this->id_cours = new ArrayCollection();
         $this->id_etudiant = new ArrayCollection();
+        $this->id_etudiant = new ArrayCollection();
     }
 
     public function getId(): ?int
