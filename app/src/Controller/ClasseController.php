@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/classe')]
 class ClasseController extends AbstractController
 {
-    #[Route('/', name: 'app_classe_index', methods: ['GET'])]
+    #[Route('/', name: 'app_classe', methods: ['GET'])]
     public function index(ClasseRepository $classeRepository, EntityManagerInterface $entityManager, EtudiantRepository $etudiantRepository): Response
     {
         
