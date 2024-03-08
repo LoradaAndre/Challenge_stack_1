@@ -21,11 +21,13 @@ class CoursType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, [
-                'attr'=> ['class'=>'bg-red-700 flex mt-2 white'],
+                'attr'=> ['class' => 'mb-4 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline',],
                 'label_attr' => ['class' => 'text-lg font-bold text-blue-500']
             ])
             ->add('description')
-            ->add('duree')
+            ->add('duree', IntegerType::class, [
+                'attr'=> ['class' => 'mb-4 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline',]
+            ])
             ->add('difficulte', IntegerType::class, [
                 'attr'=> ['max'=>5]
             ])
