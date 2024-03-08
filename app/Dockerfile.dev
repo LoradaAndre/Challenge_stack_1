@@ -18,5 +18,5 @@ RUN install-php-extensions gd exif pdo_mysql intl zip bcmath && install-php-exte
 #    apt-get update && apt-get install -y --no-install-recommends ./wkhtmltox_0.12.6-1.buster_amd64.deb && \
 #   rm wkhtmltox_0.12.6-1.buster_amd64.deb
 
-
+# RUN chmod -R 777 /var/www/app
 WORKDIR /var/www/app

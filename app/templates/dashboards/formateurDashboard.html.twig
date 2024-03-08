@@ -24,23 +24,23 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="p-4 bg-green-500  shadow text-white">
-                        <div class="text-sm font-semibold m-1 tracking-wide">Nombre de classes</div>
-                            4
+                        <div class="text-sm font-semibold m-1 tracking-wide">Nombre de Cours</div>
+                            {{ cours_count }} 
                         </div>
                         <div class="p-4 bg-gray-500  shadow text-white">
                         <div class="text-sm font-semibold  tracking-wide">Prochain examen prévu</div>
                             N/A
                         </div>
-                        <div class="p-4 bg-pink-500 shadow text-white">
-                        <div class="text-sm font-semibold  tracking-wide">Prochain cours</div>
-                            22/02/2024 15h
-                        </div>
+                        
+                        
                     </div>
                     <div class="border-b border-gray-300 h-10">
                     <p class="m-8 ml-0 font-bold text-black tracking-wide text-xl ">Acces rapid aux cours</p>
                     </div>
                     <div class="mt-8 grid grid-cols-1 sm:grid-cols-4 gap-4">
                         <!-- Replace with dynamic content -->
+                        {% for obj in cours %}
+                        <a href="/cours/{{ obj.id }}">
                         <div class="bg-white rounded-lg shadow p-4 h-80">
                             <div class="flex-col items-center space-x-3 h-full">
                                 <div class="inline-flex flex-shrink-0 h-60 w-full">
@@ -50,53 +50,19 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-medium text-gray-900">
-                                        Titre de la carte
+                                        {{obj.titre}}
                                     </p>
                                     <p class="text-sm text-gray-500">
-                                        Texte secondaire
+                                        {{obj.description}}
                                     </p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="bg-white rounded-lg shadow p-4 h-80">
-                            <div class="flex-col items-center space-x-3 h-full">
-                                <div class="inline-flex flex-shrink-0 h-60 w-full">
-                                    <span class=" w-40 bg-gray-300 h-full w-full">
-                                        <!-- Thumbnail image -->
-                                    </span>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">
-                                        Titre de la carte
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        Texte secondaire
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-lg shadow p-4 h-80">
-                            <div class="flex-col items-center space-x-3 h-full">
-                                <div class="inline-flex flex-shrink-0 h-60 w-full">
-                                    <span class=" w-40 bg-gray-300 h-full w-full">
-                                        <!-- Thumbnail image -->
-                                    </span>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">
-                                        Titre de la carte
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        Texte secondaire
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
+                       {% endfor %}
 
                         <div class="bg-white rounded-lg shadow flex items-center justify-center p-4 h-80">
-                            <a><p class="border-black border-1 border p-4">Voir tous les cours ---></p></a>
+                            <a href="/cours"><p class="border-black border-1 border p-4">Voir tous les cours ---></p></a>
                         </div>
 
                         <!-- Repeat for other cards -->

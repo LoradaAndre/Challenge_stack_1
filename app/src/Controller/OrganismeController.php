@@ -14,9 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/organisme')]
 class OrganismeController extends AbstractController
 {
-    #[Route('/', name: 'app_organisme_index', methods: ['GET'])]
+    #[Route('/', name: 'app_organisme', methods: ['GET'])]
     public function index(OrganismeRepository $organismeRepository): Response
     {
+       
+
         return $this->render('organisme/index.html.twig', [
             'organismes' => $organismeRepository->findAll(),
         ]);

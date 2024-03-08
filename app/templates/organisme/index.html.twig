@@ -1,39 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Organisme index{% endblock %}
+{% block title %}Formateur Dashboard{% endblock %}
 
 {% block body %}
-    <h1>Organisme index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for organisme in organismes %}
-            <tr>
-                <td>{{ organisme.id }}</td>
-                <td>{{ organisme.nom }}</td>
-                <td>{{ organisme.adresse }}</td>
-                <td>{{ organisme.ville }}</td>
-                <td>
-                    <a href="{{ path('app_organisme_show', {'id': organisme.id}) }}">show</a>
-                    <a href="{{ path('app_organisme_edit', {'id': organisme.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="min-h-screen flex flex-col">
+        <div class="flex-1 flex flex-row ">
+            {% include 'dashboards/navbar.html.twig' %}
 
-    <a href="{{ path('app_organisme_new') }}">Create new</a>
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                <div class="container mx-auto h-full">
+                    <div class="bg-white shadow h-full p-4 sm:p-6 xl:p-8 ">
+                        <div class="flex justify-between mb-12">
+                            <div class="font-bold text-black tracking-wide text-xl">Liste des organismes de formation</div>
+                            <a href="/organisme/new" class="mr-4 p-2 px-4 bg-orange-500 rounded-md text-white">Ajouter une nouvel organisme</a>
+                        </div>
+
+                        <div class="flex p-4 m-4">
+                            <div class="flex mr-4"></div>
+                            <div class="flex flex-1">
+                                <div class="flex items-center h-5">
+                                    <p>Nom de l'organisme</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-1">
+                                <div class="flex items-center h-5">
+                                    <p>Ville</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-row-reverse">
+                                <div class="flex items-center h-5"></div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        {% for organisme in organismes %}
+                            <!-- debut ligne organisme -->
+                            <div class="flex p-4">
+                                <div class="flex flex-1">
+                                    <div class="flex items-center h-5">
+                                        <p>{{ organisme.nom }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-1">
+                                    <div class="flex items-center h-5">
+                                        <p>{{ organisme.ville }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-1 flex-row-reverse">
+                                    <div class="flex items-center h-5 gap-4">
+                                        <a class="text-blue-500" href="#">Modifier</a>
+                                        <div class="text-red-500">
+                                            {{ include('organisme/_delete_form.html.twig') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- fin ligne organisme -->
+                        {% else %}
+                            <p>pas d'organismes enregistrés</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
 {% endblock %}
