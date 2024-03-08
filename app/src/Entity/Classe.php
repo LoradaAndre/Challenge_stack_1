@@ -29,7 +29,7 @@ class Classe
     #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'id_classe')]
     private Collection $id_cours;
 
-    #[ORM\OneToMany(mappedBy: 'id_classe', targetEntity: Etudiant::class)]
+    #[ORM\OneToMany(mappedBy: 'id_classe', targetEntity: Etudiant::class, fetch: 'EAGER')]
     private Collection $id_etudiant;
 
 
@@ -37,6 +37,7 @@ class Classe
     public function __construct()
     {
         $this->id_cours = new ArrayCollection();
+        $this->id_etudiant = new ArrayCollection();
         $this->id_etudiant = new ArrayCollection();
     }
 

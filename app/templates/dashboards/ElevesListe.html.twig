@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}formateur dashboard{% endblock %}
+
+{% block body %}
+
+
+
+  <div class="min-h-screen flex flex-col">
+    <div class="flex-1 flex flex-row ">
+        
+        {% include 'dashboards/navbar.html.twig' %} 
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto  h-full">
+                
+                <div class="bg-white shadow  h-full p-4 sm:p-6 xl:p-8 ">
+                <div class="font-bold text-black tracking-wide text-xl mb-16">Elèves</div>
+                    <div class="flex mb-8">
+                        <div class="flex flex-1">
+                        
+                        </div>
+                        <div class="flex flex-1 flex-row-reverse">
+                        
+                        <input type="text" name="recherche" id="recherche" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 " placeholer="search" required="">
+
+                        <a href="/addEleves" class="mr-4 p-2 border border-black border-2">Ajouter</a>
+                        </div>
+                    </div>
+                    
+
+
+                    <div class="flex p-4 m-4">
+                        <div class="flex mr-4">
+                            
+                        </div>
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                    <p>Nom</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                    <p>E-mail</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1">
+                            <div class="flex items-center h-5">
+                                    <p>Classe</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1 flex-row-reverse">
+                            <div class="flex items-center h-5">
+                                    
+                            </div>
+                        
+                        
+                        </div>
+                    </div>
+                    <!-- debut de etudiant -->
+   {% for etudiant in etudiants %}
+    <div class="flex p-4">
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idUtilisateur.nom }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idUtilisateur.email }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1">
+            <div class="flex items-center h-5">
+                <p>{{ etudiant.idClasse.titre }}</p>
+            </div>
+        </div>
+        <div class="flex flex-1 flex-row-reverse">
+            <div class="flex items-center h-5 gap-4">
+                <a class="text-blue-500" href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier</a>
+                <div class="text-red-500">
+                    {{ include('utilisateur/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+{% else %}
+    <p>Aucun étudiant enregistré</p>
+{% endfor %}
+
+                    <!-- fin ligne étudiant -->
+                </div>
+                </div>
+                
+            </div>
+        </main>
+        
+    </div>
+</div>
+
+{% endblock %}

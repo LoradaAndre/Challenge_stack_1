@@ -1,19 +1,28 @@
 <?php
 
 namespace App\Controller;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cours;
+use App\Entity\Classe;
 use App\Entity\Formateur;
 use App\Entity\Etudiant;
 use App\Repository\CoursRepository;
+use App\Repository\ClasseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
+
 
 
 class HomepageController extends AbstractController
 {
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/', name: 'app_homepage')]
     public function index(Security $security): Response
     {
@@ -64,34 +73,51 @@ public function dashboardF(Security $security, CoursRepository $coursRepository,
 }
 
 
-    #[Route('/organismes', name: 'app_organismes')]
-    public function organismes(): Response
-    {
-        return $this->render('dashboards/OrganismesFormateur.html.twig', [
-            'controller_name' => 'OrganismesController',
-        ]);
-    }
-
-    #[Route('/classes', name: 'app_classes')]
-    public function classes(): Response
-    {
-        return $this->render('dashboards/ClassesFormateur.html.twig', [
-            'controller_name' => 'ClassesController',
-        ]);
-    }
+    // #[Route('/organismes', name: 'app_organismes')]
+    // public function organismes(): Response
+    // {
+    //     return $this->render('dashboards/OrganismesFormateur.html.twig', [
+    //         'controller_name' => 'OrganismesController',
+    //     ]);
+    // }
 
     #[Route('/eleves', name: 'app_eleves')]
-    public function eleves(): Response
+
+    public function eleves(ClasseRepository $classeRepository, Security $security): Response
     {
-        return $this->render('dashboards/ElevesFormateur.html.twig', [
-            'controller_eleves' => 'ElevesController',
+        
+
+        
+        $userStatut = 'etudiant';
+
+        
+
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $results = $queryBuilder
+        ->select('u', 'e', 'c')
+        ->from('App\Entity\Etudiant', 'e')
+        ->leftJoin('e.id_utilisateur', 'u') 
+        ->leftJoin('e.id_classe', 'c')   
+        ->where('u.statut = :userStatut')
+        ->setParameter('userStatut', $userStatut)
+        ->getQuery()
+        ->getResult();
+
+    // dd($results);
+
+        return $this->render('dashboards/ElevesListe.html.twig', [
+            'etudiants' => $results,
         ]);
+    
+    
+        
     }
 
     #[Route('/addEleves', name: 'app_addEleves')]
     public function addeleves(): Response
     {
-        return $this->render('dashboards/AddElevesFormateur.html.twig', [
+        return $this->render('dashboards/AddEtudiant.html.twig', [
             'controller_addeleves' => 'AddElevesController',
         ]);
     }
