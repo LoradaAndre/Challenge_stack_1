@@ -10,24 +10,24 @@
             </div>
             
             {% if app.user.getStatut == "formateur" %}
-                <div class="flex-1 flex flex-col space-x-4 justify-evenly">
+                <div class="flex-1 flex flex-col justify-evenly">
                     <p><a href="/">Home</a></p>
                     <p><a href="{{ path('app_organisme') }}"">Organismes</a></p>
                     <p><a href="{{ path('app_classe') }}">Classe</a></p>
-                    <p><a>Eleves</a></p>
+                    <p><a href="{{ path('app_eleves') }}">Eleves</a></p>
                     <p><a href="{{ path('app_cours') }}">Cours</a></p>
                 </div>
-                <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+                <div class="flex-1 flex flex-col-reverse items-bottom mt-auto">
                     <p><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier les informations du profil</a></p>
                 </div>
             {% else %}
-                <div class="flex-1 flex flex-col space-x-4 justify-evenly">
+                <div class="flex-1 flex flex-col justify-evenly">
                     <p><a href="/">Home</a></p>
                     <p><a href="{{ path('app_cours') }}">Cours</a></p>
                     <p><a>Notes</a></p>
                     <p><a>Convocations</a></p>
                 </div>
-                <div class="flex-1 flex flex-col-reverse space-x-4 items-bottom mt-auto">
+                <div class="flex-1 flex flex-col-reverse items-bottom mt-auto">
                     <p><a href="{{ path('app_utilisateur_edit', {'id': app.user.id}) }}">Modifier le profil</a></p>
                 </div>
             {% endif %}
