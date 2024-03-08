@@ -77,7 +77,7 @@ class HomepageController extends AbstractController
     {
         // $questionCount = $request->query->get('question_count', 1); // Default to 1 question
 
-
+        
         return $this->render('dashboards/AddCours.html.twig', [
             'controller_AddCours' => 'HomepageController',
             // 'question_count' => $questionCount,

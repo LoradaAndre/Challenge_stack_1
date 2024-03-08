@@ -1,0 +1,51 @@
+{# templates/emails/invitation.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation à rejoindre la classe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+        .button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue !</h1>
+        <p>Vous avez été invité à rejoindre notre plateforme éducative. C'est un plaisir de vous accueillir dans notre communauté.</p>
+        <a href="{{ confirmation_url }}" class="button">Confirmer mon inscription</a>
+            <p>Votre mot de passe temporaire est : {{ password }}</p>
+    <p>Veuillez le changer dès votre première connexion.</p>
+        <p class="footer">Si vous n'avez pas demandé cette invitation, veuillez ignorer cet e-mail.</p>
+    </div>
+</body>
+</html>
