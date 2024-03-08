@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}formateur dashboard{% endblock %}
+
+{% block body %}
+
+
+
+  <div class="min-h-screen flex flex-col">
+    <div class="flex-1 flex flex-row ">
+
+        {% include 'dashboards/navbar.html.twig' %}
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto  h-full">
+                
+                <div class="bg-white shadow  h-full p-4 sm:p-6 xl:p-8 ">
+                <div class="font-bold text-black tracking-wide text-xl mb-16">Elèves</div>
+                     <form method="post">
+                        {# Assuming your Formation entity has fields like 'name', 'description', and 'duration' #}
+                        <label for="email">email:</label>
+                        <input type="text" id="mail" name="formation[mail]" required>
+
+                        <label for="statut">status:</label>
+                        <textarea id="statut" name="formation[statut]" required></textarea>
+
+
+                        {# CSRF token is important for form security #}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('formation_item') }}">
+
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                
+            </div>
+        </main>
+        
+    </div>
+</div>
+
+{% endblock %}

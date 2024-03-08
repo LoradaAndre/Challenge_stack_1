@@ -51,10 +51,13 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
 
         if ($user) {
-            $redirectUrl = $this->urlGenerator->generate('app_utilisateur_index', ['id' => $user->getId()]);
-        
+
+            
+                $redirectUrl = $this->urlGenerator->generate('app_dashboard');
+            
             return new RedirectResponse($redirectUrl);
         }
+        
     
         throw new \Exception('User must be an instance of Utilisateur');
     }

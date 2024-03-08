@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repository;
-
 use App\Entity\Cours;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +19,27 @@ class CoursRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Cours::class);
     }
+
+    public function findByFormateurId($idFormateur)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.id_formateur = :idFormateur')
+            ->setParameter('idFormateur', $idFormateur)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // src/Repository/CoursRepository.php
+
+    public function countByFormateur($idFormateur): int
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->where('c.id_formateur = :idFormateur') // Remove the semicolon here
+            ->setParameter('idFormateur', $idFormateur); // This now correctly continues the method chain
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
 
     //    /**
     //     * @return Cours[] Returns an array of Cours objects
